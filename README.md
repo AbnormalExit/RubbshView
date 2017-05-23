@@ -1,4 +1,5 @@
 ###Andorid实现垃圾桶开关动画
+
 ####效果图如下
 
 ![enter image description here](http://chuantu.biz/t5/92/1495531504x2728309609.gif)
