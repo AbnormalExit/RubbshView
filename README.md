@@ -4,18 +4,27 @@
 ![enter image description here](http://chuantu.biz/t5/92/1495531504x2728309609.gif)
 
 ####实现思路
+
 1. 先拆分分动画
+
 	+ 垃圾桶盖部分
+
 	+ 垃圾桶身体部分
+
 2. 分别使用Paint,Path画出相应内容
+
 3. 给垃圾桶盖添加动画
+
 ####具体实现
+
 1. 测量布局
+
 	测量View的宽高
+
 ```
+
     /**
      * 测量布局的宽高
-     *
      * @param defaultSize 测量的默认值大小
      * @param measureSpec 测量参数
      * @return 测量后的width or height
@@ -38,7 +47,9 @@
         return resultSize;
     }
 ```
+
 测量好布局之后给View赋值
+
 ```
 
     @Override
@@ -52,13 +63,16 @@
         mHeight = height > 0 ? height : 0;
     }
 ```
+
 2.  画出垃圾桶下面的区域和中间的三条竖线
 	+ 第一将Path moveTo 第一个点(左上角点)
 	+ 第二连接左下角顶点
 	+ 第三连接右下角顶点
 	+ 连接右上角顶点
 	+ 接下来画中间三条竖线
+
 ```
+
     /**
      * 画出垃圾桶下面区域
      */
@@ -84,9 +98,13 @@
         mPath.lineTo(mWidth / 2, mHeight / 2 + (mBodyHeight / 3));
     }
 ```
-3. 画出静止垃圾桶盖
-	+ 先画出线条再画出矩形
+
+3.  画出静止垃圾桶盖
+
+	先画出线条再画出矩形
+
 ```
+
           //1画出禁止状态的垃圾桶盖子线条
             canvas.drawLine(mWidth / 2 - (mBodyWith / 2) - 10, mHeight / 2 - (mBodyHeight / 2) - 10,
                     mWidth / 2 + (mBodyWith / 2) + 10, mHeight / 2 - (mBodyHeight / 2) - 10, mPaint);
@@ -95,13 +113,20 @@
             canvas.drawRect(mWidth / 2 - (mBodyWith / 9), mHeight / 2 - (mBodyHeight / 2) - 20, mWidth / 2 + (mBodyWith / 9),
                     mHeight / 2 - (mBodyHeight / 2) - 10, mPaint);
 ```
+
 4. 给垃圾桶盖添加动画
+
+
 ```
+
   //3.画垃圾桶打开动画
             canvas.rotate(openProgress * 30, mWidth / 2 + (mBodyWith / 2), mHeight / 2 - (mBodyHeight / 2));
 ```
+
 给外部暴露一个调用动画的方法
+
 ```java
+
     /**
      * 开始动画
      */
@@ -112,8 +137,11 @@
         invalidate();
     }
 ```
+
 最后在onDraw方法中根据View的状态去画相应的状态就OK
+
 ```
+
         //动画判断是否刷新视图
         if (animator != null && animator.isRunning()) {
             //动画执行过程中具体帧值
